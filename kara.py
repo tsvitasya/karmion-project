@@ -3677,4 +3677,20 @@ elif solnce_energy == 22:
 print("\n" + "="*60)
 print("ПОЛНЫЙ РАСЧЕТ ПРОГНОСТИЧЕСКОЙ ДУГИ 'ЛУНЫ И СОЛНЦА' ЗАВЕРШЕН.")
 print("="*60)
-
+# Добавь это в конец файла kara.py, чтобы график мог забрать результаты
+def get_karmion_data(target_age=42):
+    # Твои существующие расчеты...
+    # (Здесь должны быть твои переменные: luna_base_A, sj_energy, osh_energy, 
+    # luch1, luch2, luch3, luch4, luch5, luch6)
+    
+    return {
+        "luna_base_A": luna_base_A,
+        "sj_energy": sj_energy,
+        "osh_energy": osh_energy,
+        "luch1": luch1,
+        "luch2": luch2,
+        "luch3": luch3,
+        "luch4": luch4,
+        "luch5": luch5,
+        "luch6": luch6
+    }
