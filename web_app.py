@@ -39,22 +39,30 @@ def home():
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
+    import kara
+    import sys
+    import io
+    
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     
     day = request.form.get('day')
     month = request.form.get('month')
     year = request.form.get('year')
+
+    buffer = io.StringIO()
+    sys.stdout = buffer
     
-    kara.get_user_data(day, month, year)
+    try:
+        kara.user_day = int(day)
+        kara.user_month = int(month)
+        kara.user_year = int(year)
+    except Exception as e:
+        sys.stdout = sys.stdout
+        return f"Ошибка данных: {str(e)}"
     
-    return f"Расчет выполнен. Возраст: {kara.target_age}"
-    
-    # Вызываем функцию из kara.py. 
-    # Убедись, что функция в kara.py называется именно так.
-    result = kara.calculate_karmion(day, month, year)
-    
-    return f"Результат расчета: {result}"
+    sys.stdout = sys.stdout
+    return f"<pre>{buffer.getvalue()}</pre>"
 
 if name == 'main':
     app.run()
