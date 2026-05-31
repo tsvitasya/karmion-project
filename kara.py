@@ -2346,28 +2346,21 @@ luch6_texts[22] = (
 )
 
 # === ОСНОВНАЯ ЧАСТЬ ПРОГРАММЫ ===
-print("--- СИСТЕМА 'КАРМИОН' ГОТОВА ---")
+from datetime import datetime
+
 def get_user_data(day, month, year):
-    global user_day, user_month, user_year
+    global user_day, user_month, user_year, target_age
     user_day = int(day)
     user_month = int(month)
     user_year = int(year)
-# --- АВТОМАТИЧЕСКИЙ РАСЧЕТ И ВВОД ВОЗРАСТА ДЛЯ ПРОГНОСТИКИ ---
-from datetime import datetime
-
-current_date = datetime.now()
-calculated_age = current_date.year - user_year
-
-if (current_date.month, current_date.day) < (user_month, user_day):
-    calculated_age -= 1
-
-print(f"\n[Система 'Кармион']: Автоматически определен текущий возраст: {calculated_age} лет.")
-user_age_input = input("Нажмите Enter для расчета прогностики на этот возраст или введите любой другой возраст: ").strip()
-
-if user_age_input == "":
+    
+    current_date = datetime.now()
+    calculated_age = current_date.year - user_year
+    if (current_date.month, current_date.day) < (user_month, user_day):
+        calculated_age -= 1
+        
     target_age = calculated_age
-else:
-    target_age = int(user_age_input)
+    return target_age
 
 
 # --- 1. ВЫВОД РОДОВОЙ ЗАДАЧИ ---
