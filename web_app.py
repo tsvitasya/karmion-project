@@ -42,10 +42,13 @@ def calculate():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     
-    # Берем данные из формы
     day = request.form.get('day')
     month = request.form.get('month')
     year = request.form.get('year')
+    
+    kara.get_user_data(day, month, year)
+    
+    return f"Расчет выполнен. Возраст: {kara.target_age}"
     
     # Вызываем функцию из kara.py. 
     # Убедись, что функция в kara.py называется именно так.
