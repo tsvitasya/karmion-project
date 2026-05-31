@@ -1,23 +1,22 @@
-from flask import Flask, request, render_template_string, session, redirect, url_for
+from flask import Flask, request, session, redirect, url_for
 import kara
 
 app = Flask(name)
-# Это секретный ключ для защиты сессии
 app.secret_key = 'karmion_secret_key_2026'
 
-# Данные для входа
 USERNAME = 'admin'
 PASSWORD = 'Karmion2026'
 
-# Страница входа
-login_html = """
+# Страница с формой для ввода даты
+home_html = """
 <html>
     <body style="font-family: sans-serif; text-align: center; margin-top: 50px;">
-        <h2>Вход в Karmion</h2>
-        <form method="post" action="/login">
-            <input type="text" name="username" placeholder="Логин" required><br><br>
-            <input type="password" name="password" placeholder="Пароль" required><br><br>
-            <button type="submit">Войти</button>
+        <h2>Система Karmion: Расчет</h2>
+        <form method="post" action="/calculate">
+            <input type="number" name="day" placeholder="День" required><br><br>
+            <input type="number" name="month" placeholder="Месяц" required><br><br>
+            <input type="number" name="year" placeholder="Год" required><br><br>
+            <button type="submit">Рассчитать</button>
         </form>
     </body>
 </html>
@@ -26,19 +25,33 @@ login_html = """
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.form['username'] == USERNAME and request.form['password'] == PASSWORD:
+        if request.form.get('username') == USERNAME and request.form.get('password') == PASSWORD:
             session['logged_in'] = True
             return redirect(url_for('home'))
-        return "Неверный логин или пароль! <a href='/login'>Попробовать еще раз</a>"
-    return login_html
+        return "Неверный логин или пароль! <a href='/login'>Назад</a>"
+    return '<form method="post">Логин: <input type="text" name="username"><br>Пароль: <input type="password" name="password"><br><button type="submit">Войти</button></form>'
 
 @app.route('/')
 def home():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
+    return home_html
+
+@app.route('/calculate', methods=['POST'])
+def calculate():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     
-    # Сюда мы добавим вызов функции из kara.py, когда ты будешь готова
-    return "Доступ разрешен! Система Karmion готова к работе."
+    # Берем данные из формы
+    day = request.form.get('day')
+    month = request.form.get('month')
+    year = request.form.get('year')
+    
+    # Вызываем функцию из kara.py. 
+    # Убедись, что функция в kara.py называется именно так.
+    result = kara.calculate_karmion(day, month, year)
+    
+    return f"Результат расчета: {result}"
 
 if name == 'main':
     app.run()
