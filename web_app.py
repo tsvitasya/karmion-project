@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template_string
-import кара  # Мы импортируем твой кара.py как модуль
+import kara  # Мы импортируем твой kara.py как модуль
 
 app = Flask(name)
 
