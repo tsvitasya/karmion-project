@@ -2347,9 +2347,11 @@ luch6_texts[22] = (
 
 # === ОСНОВНАЯ ЧАСТЬ ПРОГРАММЫ ===
 print("--- СИСТЕМА 'КАРМИОН' ГОТОВА ---")
-user_day = int(input("Введите ДЕНЬ рождения (1-31): "))
-user_month = int(input("Введите МЕСЯЦ рождения (1-12): "))
-user_year = int(input("Введите ГОД рождения (например, 1985): "))
+def get_user_data(day, month, year):
+    global user_day, user_month, user_year
+    user_day = int(day)
+    user_month = int(month)
+    user_year = int(year)
 # --- АВТОМАТИЧЕСКИЙ РАСЧЕТ И ВВОД ВОЗРАСТА ДЛЯ ПРОГНОСТИКИ ---
 from datetime import datetime
 
